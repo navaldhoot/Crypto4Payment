@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<head>
+	<link rel="shortcut icon" href="images/favicon.ico" />
+	
+	<!------TITLE----------->
+	<title>Registration</title>
+
+	<!----------INCLUSION OF FONT AWESOME LIBRARY---------------->
+	<script src="https://use.fontawesome.com/7d44bc7623.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+
+	<!---------- INCLUSION OF VIEWPORT --------------->
+	<meta name="viewport" content="width=1024">
+	
+	
+	<!------------BOOTSTRAP  FILE---------->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-----------CSS FILE---------->
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/register.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<style>
+	body, html {
+    height: 100%;
+    margin: 0;
+}
+	.bg {
+
+    background:url(images/register_back.jpg);
+
+  
+    height: 100%; 
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+	</style>
+
+</head>
+<body>
+
+	<div id="container-fluid">
+			<div class="row">
+		<div class="col-md-12 head">
+		<div class="col-md-2">
+			<img src="images/logo.png" width="100%" height="150" alt="Crypto4Payment"> 
+		</div>
+		<!------ MENU CODE ---------->
+					<div class="col-md-10 heading">
+				<h1>Crypto4Payment</h1>      
+				<hr class="head-under">
+				<h3>Pay Easy,Pay Digital</h3>
+			</div>
+		</div>
+		</div>
+
+		</div>
+		
+			<div class="row login-menu">
+	
+	<div class="col-md-12 menu-center">
+
+		<ul>
+				<li><a href="home.html">Home</a></li>
+				<li><a href="#">Register</a></li>
+				<li><a href="login.html">Login</a></li>
+	   			
+		</ul>
+    
+	</div>
+	</div>
+		
+	
+	
+	
+	<!----------------Registration Form-------------->
+<div class="bg" style="height:800px;padding-top:150px">
+		<div class="row" >
+			<div class="col-md-12">
+				<h1 class="reghead">REGISTRATION FORM</h1>
+			</div>
+		</div>
+
+		<form name="myForm" action="register_submit.php" method="post"  ><!--onsubmit="return validate();"-->
+	
+	
+	<div class="row">
+		<div class="col-lg-6  col-md-6  col-sm-6">
+			<p><b>Name:</b></p>
+		</div>
+		<div class="col-lg-6 col-md-6  col-sm-6 name">
+			<input type="text" name="name" id="name">
+			<p id="nerror"></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<p><b>Email:</b></p>
+		</div>
+		<div class="col-md-6">
+			<input type="email" name="email" id="email">
+				<p id="eerror"></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<p><b>Mobile:</b></p>
+		</div>
+		<div class="col-md-6">
+			<input type="number" name="mobile" id="mobile">
+				<p id="merror"></p>
+		</div>
+	</div>
+
+	
+	<div class="row">
+		<div class="col-md-6">
+			<p><b>Password:</b></p>
+		</div>
+		<div class="col-md-6">
+			<input type="password" name="user_password" id="user_password">
+				<p id="pwderror"></p>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<p><b>Confirm Password:</b></p>
+		</div>
+		<div class="col-md-6">
+			<input type="password" name="confirm_password"  id="confirm_password">
+				<p id="cpswdserror"></p>
+		</div>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-md-6">
+			<input type="reset" value="CLEAR" class="sub">
+		</div>
+		<div class="col-md-6">
+			<input  type="submit" value="SUBMIT" class="sub" align="left" onclick=" return validate()">
+		</div>
+	</div>
+	<script>
+	function validate(){
+			var name = document.getElementById("name").value;
+			//		var  email=document.getElementById("email").value
+			var  mobile=document.getElementById("mobile").value;
+		var  pswd=document.getElementById("user_password").value;
+		var  cnfr=document.getElementById("confirm_password").value;
+	var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+	 var flag=true;
+
+	 
+	 
+	 var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+     
+	 
+	 
+	 if( name.toString().length === 0)
+	 
+		{
+
+		document.getElementById("nerror").innerHTML="Enter Correct Name";
+			//alert("Confirmation fields do not match, please retype and try again.");
+			flag=false;//flag=false;
+			//return false;
+		}
+		if(mobile.toString().length != 10 )
+		{
+			document.getElementById("merror").innerHTML="Enter Correct Mobile Number";
+			flag=false;
+		}
+		if( !re.test(pswd))
+		{
+			console.log(pswd);
+			document.getElementById("pwderror").innerHTML="Password must be minimum of eight character and contains at least 1 uppercase , 1 lowercase ,1 numbers and 1  special character.";
+			flag=false;
+		
+		}
+	if(pswd.toString() != cnfr.toString() )
+		{
+			document.getElementById("cpswdserror").innerHTML="Password not Matches";
+			flag=false;
+		}
+	return flag;
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+	
+</div>	
+</form>
+			<div class="row footer">
+		
+                <div class="col-md-12 cpy-text">
+                		<p>CopyRight &copy 2018</p>
+                </div>
+            </div>
+        </div>
+		
+		
+
+
+
+</div>	
+</body>
+</html>

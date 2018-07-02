@@ -1,0 +1,62 @@
+body{
+	font-family:'Lato'!important;
+	
+	
+}
+
+body p{
+	text-align:center;
+}
+
+
+.container-fluid{
+	padding:0px!important;
+}
+
+.reghead{
+	color:white;
+	font-size:40px;
+	font-weight:900;
+	text-align:center;
+}
+  
+ 
+
+.regsubhead{
+	color:white;
+	font-size:30px;
+	text-align:center;
+	font-weight:400;
+	
+}
+.name input {
+	width:200px;
+	
+}
+form p{
+	font-size:25px;
+	font-weight:100;
+	color:white;
+	
+}
+
+.sub{
+	border:solid;
+	border-color: grey;
+	background:maroon;
+	color:white;
+	padding-bottom:1px;	
+	padding-left:20px;	
+	padding-right:20px;	
+	padding-top:1px;
+	text-align:center;
+	font-size:25px;
+	font-weight:400;
+	margin-left:200px;
+}
+
+@media screen and (min-width: 480px) {
+    body {
+        width= 750 px;
+    }
+}

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<head>
+	<!-- TITLE --->x-fast
+	<title>Crypto4Payment</title>
+	<link rel="shortcut icon" href="images/favicon.ico" />
+	<!----------- INCLUSION OF FONT AWESOME LIBRARY------------->
+	<script src="https://use.fontawesome.com/7d44bc7623.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+	
+	<!---------- INCLUSION OF VIEWPORT --------------->
+<!---------- INCLUSION OF VIEWPORT --------------->
+	<meta name="viewport" content="width=1024">
+	
+	<!----------- INCLUSION OF  CSS FILES  ----------->
+	<link rel="stylesheet" type="text/css" href="css/home.css">
+<link rel="stylesheet" type="text/css" href="css/common.css">
+	<!----- INCLUSION OF BOOTSTRAP ------------>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script>
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send(null );
+    return xmlHttp.responseText;
+}
+
+function FormatNumberLength(num, length) {
+    var r = "" + num;
+    while (r.length < length) {
+        r = "0" + r;
+    }
+    return r;
+}
+
+function calculate()
+{
+crypt_multi_background_color = typeof crypt_multi_background_color == "undefined" ? "#FFFFFF" : crypt_multi_background_color;
+crypt_multi_transperency = typeof crypt_multi_transperency == "undefined" ? true : crypt_multi_transperency;
+crypt_multi_border_width = typeof crypt_multi_border_width == "undefined" ? 1 : crypt_multi_border_width;
+crypt_multi_border_color = typeof crypt_multi_border_color == "undefined" ? "#CCCCCC" : crypt_multi_border_color;
+crypt_multi_border_corners = typeof crypt_multi_border_corners == "undefined" ? "rounded" : crypt_multi_border_corners;
+crypt_multi_font_family = typeof crypt_multi_font_family == "undefined" ? "Arial" : crypt_multi_font_family;
+crypt_multi_font_size = typeof crypt_multi_font_size == "undefined" ? "medium" : crypt_multi_font_size;
+crypt_multi_font_color = typeof crypt_multi_font_color == "undefined" ? "#000000" : crypt_multi_font_color;
+crypt_multi_display_time = typeof crypt_multi_display_time == "undefined" ? true : crypt_multi_display_time;
+
+if (crypt_multi_transperency)
+    crypt_multi_background_color = 'transparent';
+
+switch (crypt_multi_font_size) {
+    case 'small':
+        crypt_multi_font_size = "90%";
+        break;
+
+    case 'medium':
+        crypt_multi_font_size = "110%";
+        break;
+
+    case 'large':
+        crypt_multi_font_size = "150%";
+        break;
+}
+
+crypt_multi_style = 'background: ' + crypt_multi_background_color +
+    '; border: ' + crypt_multi_border_width + 'px solid ' + crypt_multi_border_color + ';' +
+    'font-family: ' + crypt_multi_font_family +'; font-size: ' + crypt_multi_font_size +
+    '; color: ' + crypt_multi_font_color + ';';
+
+if (crypt_multi_border_corners == "square") {
+    crypt_multi_style += "-webkit-border-radius: 0 !important; -moz-border-radius: 0 !important; border-radius: 0 !important;";
+}
+
+//document.write('\
+  //  <div class="cryptonatorwidget" ' + crypt_multi_style + '">\
+    //');
+
+for (var i = 0; i < crypt_multi_num_cur; ++i) {
+    n1 = eval("crypt_base_cur_" + i);
+    n2 = eval("crypt_target_cur_" + i);
+
+    getPar = eval('(' + httpGet("https://api.cryptonator.com/api/ticker/" +
+        n1.toLowerCase().match(/.*?\(([0-9a-z]+)\)/i)[1] + "-" + n2.toLowerCase().match(/.*?\(([0-9a-z]+)\)/i)[1]) + ')');
+
+    if (getPar.success != false) {
+        if (getPar.ticker.price > 1)
+            price = Math.round(getPar.ticker.price * 100) / 100;
+        else
+            price = getPar.ticker.price;
+
+        var text_style = '<font style="color:#cc0000;font-weight:heavy;"><b>&darr;</b></font>';
+        if (getPar.ticker.change >= 0) {
+            text_style = '<font style="color:#009900;font-weight:heavy;"><b>&uarr;</b></font>';
+        }
+
+        /*document.write('<div style="border-bottom: 1px solid ' + crypt_multi_border_color + ';padding:10px;">\
+            <font style="font-size:90%;">' + n1 + '</font>\
+            <b>' + price + '</b> ' + n2.match(/.*?\(([0-9a-z]+)\)/i)[1] + '\
+                ' + text_style + '\
+                ');
+			*/
+			
+			
+			
+//document.write(price);			
+
+	
+        var month_name = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+        var date = new Date(getPar.timestamp * 1000);
+        var day = FormatNumberLength(date.getDate(), 2);
+        var month = month_name[date.getMonth()];
+        var year = date.getFullYear();
+        var hour = FormatNumberLength(date.getHours(), 2);
+        var minutes = FormatNumberLength(date.getMinutes(), 2);
+        var seconds = FormatNumberLength(date.getSeconds(), 2);
+        var time_zone = "UTC+0:00";
+
+        //document.write('</div>');
+    }
+    else {
+       // document.write('<div style="border-bottom: 1px solid ' + crypt_multi_border_color + ';padding:10px;">No price available</div>');
+    }
+}
+/*
+if (crypt_multi_display_time){}
+    document.write('<div style="font-size:70%;opacity:0.6;padding-top:10px;padding-left:10px;">Updated ' + day + ' ' + month + ' ' + year + ' '
+        + hour + ':' + minutes + ':' + seconds + ' '
+        + time_zone + '</div>');
+
+document.write('<div style="font-size:10px;opacity:0.6;padding:10px;">Powered by <a style="color:' + crypt_multi_font_color + ';" href="https://www.cryptonator.com" target="_blank">Cryptonator</a></div>\
+</div>');*/
+return price;
+}
+function print(){
+		var o = document.getElementById("price").value;
+		
+		if( o  == 1)
+		{
+			usd();
+		}
+		else if (o  == 2)
+		{	
+			euro();
+		}
+		else if(o == 3)
+		{
+			cad();
+		}
+		else if(o == 4)
+		{
+			aud();
+		}
+		else if(o == 5)
+		{
+			idr();
+		}
+		else 
+		{
+			jpy();
+		}
+	
+}
+
+
+
+
+
+
+
+function usd(){
+crypt_multi_num_cur="1";
+crypt_base_cur_0 = "Bitcoin (BTC)";
+crypt_target_cur_0 = "US Dollar (USD)";
+var n = calculate();
+document.getElementById("final").value = n;
+//document.write("<script type='text/javascript'  src='multi_widget.js'><\/script>");
+
+//document.getElementById("text").innerHTML ="<script type='text/javascript'  src='multi_widget.js'><\/script>";
+}
+
+function euro(){
+crypt_multi_num_cur="1";
+crypt_base_cur_0 = "Bitcoin (BTC)";
+crypt_target_cur_0 = "Euro (EUR)";
+var n = calculate();
+document.getElementById("final").value = n;
+
+//document.write("<script type='text/javascript'  src='multi_widget.js'><\/script>");
+//document.getElementById("text").innerHTML = "<script type='text/javascript'  src='multi_widget.js'><\/script>";
+}
+
+function cad(){
+crypt_multi_num_cur="1";
+crypt_base_cur_0 = "Bitcoin (BTC)";
+crypt_target_cur_0 ="Canadian Dollar (CAD)";
+var n = calculate();
+document.getElementById("final").value = n;
+
+
+//document.write("<script type='text/javascript'  src='multi_widget.js'><\/script>");
+//document.getElementById("text").innerHTML = "<script type='text/javascript'  src='multi_widget.js'><\/script>";
+
+
+}
+function aud(){
+crypt_multi_num_cur="1";
+crypt_base_cur_0 = "Bitcoin (BTC)";
+crypt_target_cur_0 = "Australian Dollar (AUD)";
+var n = calculate();
+document.getElementById("final").value = n;
+
+
+//document.write("<script type='text/javascript'  src='multi_widget.js'><\/script>");
+//document.getElementById("text").innerHTML = "<script type='text/javascript'  src='multi_widget.js'><\/script>";
+
+
+}
+function idr(){
+crypt_multi_num_cur="1";
+crypt_base_cur_0 = "Bitcoin (BTC)";
+crypt_target_cur_0 = "Indonesian Rupiah (IDR)";
+var n = calculate();
+document.getElementById("final").value = n;
+
+//document.write("<script type='text/javascript'  src='multi_widget.js'><\/script>");
+///document.getElementById("text").innerHTML = "<script type='text/javascript'  src='multi_widget.js'><\/script>";
+
+}
+
+function jpy(){
+crypt_multi_num_cur="1";
+crypt_base_cur_0 = "Bitcoin (BTC)";
+crypt_target_cur_0 = "Japanese Yen (JPY)";
+var n = calculate();
+document.getElementById("final").value = n;
+
+//document.getElementById("text").innerHTML = "<script type='text/javascript'  src='multi_widget.js'><\/script>";
+
+}
+
+</script>
+
+	
+</head>
+<body>
+	<div class="container">
+	<div class="row">
+		<div class="col-md-12 head">
+		<div class="col-md-2">
+			<img src="images/logo.png" width="100%" height="150" alt="Crypto4Payment"> 
+		</div>
+		<!------ MENU CODE ---------->
+			<div class="col-md-10 heading">
+				<h1>Crypto4Payment</h1>      
+				<hr class="head-under">
+				<h3>Pay Easy,Pay Digital</h3>
+			</div>
+		</div>
+
+		</div>
+			<div class="row login-menu">
+	
+	<div class="col-md-12 menu-center">
+
+		<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="register.html">Register</a></li>
+				<li><a href="login.html">Login</a></li>
+	   			
+		</ul>
+    
+	</div>
+	</div>
+		
+		<div class="row main-text">
+			<!-- SLIDESHOW CODE ---------------->
+			<div class="slideshow-container">
+
+				
+				  
+				<div class="h1main text">
+					Crypto4Payment 
+				</div>
+				
+				<div class="h1main subtext">
+					Make Payment With CryptoCurrency
+				</div>
+				
+				
+				<div class="col-md-12	 bcalculator" >
+				 
+				 
+				 <div class="col-md-2"></div>
+				 
+				 <div class="col-md-7">
+				<div class="col-md-4">
+				<span>1  BTC   =  </span>
+				</div>
+				<div class="col-md-4">
+				  
+				  <input type="text" id="final" width="50%" value=""> 
+				  
+				<!--<span id="text"> </span>-->
+				</div>
+				<div class="col-md-4">
+				
+				<select width="50" id="price" onChange="print()">
+				<option value="0">---Select---</option>
+				<option value="1">US Dollar(USD)</option>
+				<option value="2">Euro(EUR)</option>
+				<option value="3">Canadian Dollar(CAD)</option>
+				<option value="4">Australian Dollar(AUD)</option>
+				<option value="5">Indonesian Rupiah(IDR)</option>
+				<option value="6">Japanese Yen(JPY)</option>
+				</select>
+				</span>
+				
+				</div>
+				</div>
+				
+					 <div class="col-md-2"></div>
+			
+				
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			</div>
+		</div>
+		
+		
+		
+	
+		
+		<!--/***********VISISON**************/-->
+		<div class="row vision">
+
+		<div class="col-md-12">
+		
+		<h2 class="section-heading">Vision</h2>
+
+		</div>
+		
+		<div class="col-md-12 vis-text">
+		
+			
+			<p>Crypto4Payment is a convenient and secure way to pay in different business platform.</p>
+			<p>&nbsp;</p>
+			<p>Our Vision is to <strong>Transform the cash world into digital platform</strong> in which all the industry accept the payment in digital form and also accept payment in cryptocurrency so that this technology plays important role in near future.</p>
+			<p>&nbsp;</p>
+			<p>We will&nbsp;establish the <strong>Digital Platform</strong> as the currency for all industry, allowing to use their services and integrating it with mobility services and daily life.</p>
+		
+		
+		</div>
+</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!--Services------------>
+		<div class="row services">
+		
+			<div class="col-md-12 ser-head">
+				<p>SERVICES</p>
+			</div>
+			
+			
+			<div class="col-md-12 ser-desc">
+			
+			
+			<div class="col-md-12 flight blk">
+			<div class="col-md-12">
+			<p class="ser-head">Flight Booking</p>
+			</div>
+			<div class="col-md-6">
+			
+				<p class="ser-text"> Book the flight and pay intocryptocurrency and enjoy the journey.</p>
+			
+			
+			
+			</div>
+			<div class="col-md-6">
+				<img src="images/flight.jpg" width="auto" height="250">
+			
+			</div>
+			
+			
+			</div>
+
+		<div class="col-md-12 hl"></div>
+
+		
+		
+			<div class="col-md-12 parking blk">
+		
+			<div class="col-md-12">
+					<p class="ser-head">Parking</p>
+			</div>
+		<div class="col-md-5">
+				<img src="images/parking.jpg" width="100%" height="250">
+			
+			</div>
+			
+			<div class="col-md-5">
+			
+				<p class="ser-text"> Chooose the vehicle parking place and pay in the form of cryptocurrency
+						and get rid of time wastage.</p>
+			
+			</div>
+			
+			
+			</div>
+					<div class="col-md-12 hl"></div>
+
+			<div class="col-md-12 movie blk">
+			<div class="col-md-12">
+			<p class="ser-head">Movie  Ticket Booking</p>
+			</div>
+			<div class="col-md-6">
+				
+			
+				<p class="ser-text"> Book the movie ticket in desired theatre and pay in form of cryptocurrency
+				and get the ticket.</p>
+
+			</div>
+			
+			<div class="col-md-6">
+				<img src="images/movie.jpg" width="auto" height="250">
+			
+			</div>
+			
+			
+			</div>
+			
+					<div class="col-md-12 hl"></div>
+
+			<div class="col-md-12 recharge blk">
+			
+			<div class="col-md-12">
+				<p class="ser-head">Mobile Recharge</p>
+			</div>
+			
+			<div class="col-md-6">
+				<img src="images/recharge.jpg" width="60%" height="250">
+			</div>
+			<div class="col-md-6">
+				
+				<p class="ser-text"> Recharge the mobile for the desired operator and pay into  cryptocurrency 
+				and enjoy the uninterrupted service of mobile.</p>
+
+			</div>
+			
+			</div>
+		
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<div class="row how-to-pay">
+		
+			<div class="col-md-12">
+				<h1 class="section-heading">HOW TO PAY?</h1>
+			
+			</div>
+		
+		
+		
+		
+		
+		
+			<div class="col-md-5 blk blk1" >
+			
+				<div class="row">
+				<div class="col-md-2 number">
+				<img src="images/one.png" width="auto" height="auto">
+				
+				</div>
+				<div class="col-md-6">
+					<h2 class="pay-head">ADD MONEY</h2>
+					<p class="pay-text">
+						Add your money in the your wallet in form of cryptocurrency.
+					</p>
+				</div>
+				</div>
+			
+				<div class="row">
+				<div class="col-md-2 number">
+				<img src="images/two.png" width="auto" height="auto">
+				
+				</div>
+				<div class="col-md-6">
+					<h2 class="pay-head">ANALYZE</h2>
+					<p class="pay-text">
+						Analyze your money with different currencies market rate.
+					</p>
+				</div>
+				</div>
+			
+				<div class="row">
+				<div class="col-md-2 number">
+				<img src="images/three.png" width="auto" height="auto">
+				
+				</div>
+				<div class="col-md-6">
+					<h2 class="pay-head">SERVICE</h2>
+					<p class="pay-text">
+						Choose the service in which you want to pay.
+					</p>
+				</div>
+				</div>
+		
+			</div>
+		
+		
+		<div class="col-md-1 vl"></div>
+		
+		
+		<div class="col-md-5 blk blk2">
+			
+				<div class="row">
+				<div class="col-md-2 number">
+				<img src="images/four.png" width="auto" height="auto">
+				
+				</div>
+				<div class="col-md-6">
+					<h2 class="pay-head">PROCEED</h2>
+					<p class="pay-text">
+						Complete the formality of your service.
+					</p>
+				</div>
+				</div>
+			
+				<div class="row">
+				<div class="col-md-2 number">
+				<img src="images/five.png" width="auto" height="auto">
+				
+				</div>
+				<div class="col-md-6">
+					<h2 class="pay-head">PAY</h2>
+					<p class="pay-text">
+						Pay tha amount in your cryptocurrency.
+					</p>
+				</div>
+				</div>
+			
+		
+		<div class="row">
+				<div class="col-md-2 number">
+				<img src="images/six.png" width="auto" height="auto">
+				
+				</div>
+				<div class="col-md-6">
+					<h2 class="pay-head">DONE</h2>
+					<p class="pay-text">
+						Congrates you have successfully booked your chosen service.
+					</p>
+				</div>
+				</div>
+		
+		
+		</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<div class="row footer">
+		
+                <div class="col-md-12 cpy-text">
+                		<p>CopyRight &copy 2018</p>
+                </div>
+            </div>
+        </div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</div>
+</body>
+</html>
